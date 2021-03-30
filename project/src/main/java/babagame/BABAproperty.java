@@ -5,26 +5,27 @@ public class BABAproperty {
 	private char property;
 
 	public BABAproperty(char property) {
-		if (!"yvps".contains(String.valueOf(property))) { // hhv YOU, WIN, PUSH, STOP
+		if (!"yvps".contains(String.valueOf(property))) { // yvps = YOU, WIN, PUSH, STOP
 			throw new IllegalArgumentException("invalid noun or property");
 		} else {
 			this.property = property;
 		}
 	}
 
+//	The following bools represent the underlying properties of YOU, WIN, PUSH and STOP
 	public boolean isSolid() {
-		return (property != 'v'); // WIN er einaste ikkje-solid
+		return (property != 'v'); // only WIN is non-solid
 	}
 
 	public boolean isMove() {
-		return (property == 'y' | property == 'p'); // YOU og PUSH er move
+		return (property == 'y' || property == 'p'); // YOU and PUSH is move
 	}
 
 	public boolean isYou() {
-		return (property == 'y'); // YOU er you
+		return (property == 'y'); // YOU is you
 	}
 
 	public boolean isWin() {
-		return (property == 'v'); // WIN er win
+		return (property == 'v'); // WIN is win
 	}
 }

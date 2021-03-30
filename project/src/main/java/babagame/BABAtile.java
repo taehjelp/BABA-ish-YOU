@@ -1,12 +1,8 @@
 package babagame;
 
-enum TileTypeEnum { // for å minne meg om ei betre verd
-	TEXT, BABA, FLAG, ROCK, WALL, EMPTY;
-}
-
 public class BABAtile {
-	private char type = ' ';
-	private char underType = ' ';
+	private char type = ' '; // current type of the tile
+	private char underType = ' '; // stores non-solid type if a move-obj moves on top of it
 	private char text;
 	private int x;
 	private int y;
@@ -14,20 +10,19 @@ public class BABAtile {
 	private boolean move = false;
 	private boolean you = false;
 	private boolean win = false;
-//  types
-	private String types = "TBFRW "; // hhv TEXT, BABA, FLAG, ROCK, WALL, EMPTY
+	
+	private String types = "BTFRW "; // BTFRW' '  = BABA, TEXT, FLAG, ROCK, WALL, EMPTY
 //  text types
-	private String nouns = "btfrw"; // hhv BABA, TEXT, FLAG, ROCK, WALL
-	private String operators = "i"; // is
-	private String properties = "yvps"; // hhv YOU, WIN, PUSH, STOP
+	private String nouns = "btfrw"; // btfrw = BABA, TEXT, FLAG, ROCK, WALL
+	private String operators = "i"; // i = is
+	private String properties = "yvps"; // yvps = YOU, WIN, PUSH, STOP
 
 	public BABAtile(int x, int y) {
 		this.x = x;
 		this.y = y;
 	}
 
-//	gjenstand-setters
-	public void setType(char type) {
+	public void setType(char type) { // sets type if valid
 		if (!types.contains(String.valueOf(type))) {
 			throw new IllegalArgumentException("invalid type");
 		} else if (type == 'T') {
@@ -36,16 +31,21 @@ public class BABAtile {
 		this.type = type;
 	}
 
-	public void setType(char type, char text) {
-		if ((!types.contains(String.valueOf(type))) || (!isNoun(text) && isOperator(text) && isProperty(text))) {
-			throw new IllegalArgumentException("invalid type or text");
+	public void setType(char type, char text) { // if type = Text: sets type and text if valid
+		if (type != 'T') {
+			throw new IllegalArgumentException("invalid type");
 		}
-		this.type = 'T';
+		else if (!((isNoun(text) || isOperator(text) || isProperty(text)))) {
+			throw new IllegalArgumentException("invalid text");
+		}
+		this.type = type;
 		this.text = text;
-		solid = true; // set TEXT is PUSH by default
+		solid = true; // set TEXT is PUSH and MOVE by default
 		move = true;
 	}
 
+//	(!isNoun(text) && isOperator(text) && isProperty(text) true dersom text IKKJE noun og Er operator OG property			
+	
 	public void setUnderType(char type) {
 		if (!solid == false) {
 			throw new IllegalArgumentException("tile cannot be solid");

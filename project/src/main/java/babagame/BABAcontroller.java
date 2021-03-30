@@ -60,7 +60,7 @@ public class BABAcontroller {
 		for (int y = 0; y < height; y++) { // sets the type of each tile according to board[][]
 			for (int x = 0; x < width; x++) {
 				char chara = board[y][x];
-				if (!Character.isUpperCase(chara)) { // text
+				if (Character.isLowerCase(chara)) { // text
 					game.getTile(x, y).setType('T', chara);
 				} else if (Character.isUpperCase(chara)) {
 					game.getTile(x, y).setType(chara); // type != text
@@ -196,7 +196,7 @@ public class BABAcontroller {
 		for (int y = 0; y < height; y++) {
 			for (int x = 0; x < width; x++) {
 				char chara = board[y][x];
-				if (!Character.isUpperCase(chara)) { // type = text
+				if (Character.isLowerCase(chara)) { // type = text
 					game.getTile(x, y).setType('T', chara);
 				} else if (Character.isUpperCase(chara)) {
 					game.getTile(x, y).setType(chara); // type != text
