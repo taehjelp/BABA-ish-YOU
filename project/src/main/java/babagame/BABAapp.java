@@ -6,7 +6,6 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
-// idk what any of dis means bruvvvvvvvvv
 public class BABAapp extends Application {
 
 	@Override
@@ -22,3 +21,6 @@ public class BABAapp extends Application {
 	}
 
 }
+
+//	eit problem: ein kan også utslette tekst om ein skubbe tekst inn i vegg:)))
+//	sry meinte Ein Feature

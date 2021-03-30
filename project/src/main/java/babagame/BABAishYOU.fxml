@@ -22,12 +22,16 @@
                <children>
                   <Pane fx:id="board" layoutX="-10.0" layoutY="-10.0" prefHeight="420.0" prefWidth="420.0" />
                </children></Pane>
-            <Pane prefHeight="80.0" prefWidth="420.0" GridPane.rowIndex="1">
+            <Pane prefHeight="102.0" prefWidth="400.0" GridPane.rowIndex="1">
                <children>
                   <Button layoutX="168.0" layoutY="28.0" mnemonicParsing="false" onAction="#handleUp" prefWidth="55.0" text="UP" />
                   <Button layoutX="168.0" layoutY="54.0" mnemonicParsing="false" onAction="#handleDown" prefWidth="55.0" text="DOWN" />
                   <Button layoutX="113.0" layoutY="41.0" mnemonicParsing="false" onAction="#handleLeft" prefWidth="55.0" text="LEFT" />
                   <Button layoutX="223.0" layoutY="41.0" mnemonicParsing="false" onAction="#handleRight" prefWidth="55.0" text="RIGHT" />
+                  <Button layoutX="345.0" layoutY="28.0" mnemonicParsing="false" onAction="#handleSave" prefWidth="55.0" text="SAVE" />
+                  <Button layoutX="345.0" layoutY="54.0" mnemonicParsing="false" onAction="#handleLoad" prefWidth="55.0" text="LOAD" />
+                  <Button layoutY="28.0" mnemonicParsing="false" prefWidth="55.0" onAction="#handleReset" text="RESET" />
+                  <Button layoutY="54.0" mnemonicParsing="false" prefWidth="55.0" onAction="#handleBonk" text="BONK" />
                </children>
             </Pane>
          </children>
