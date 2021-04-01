@@ -6,9 +6,6 @@ import java.io.File;
 import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
-//import java.util.ArrayList;
-//import java.util.List;
-//import java.util.Scanner;
 
 public class BABAfile implements BABAfileInterface{
 
@@ -17,28 +14,28 @@ public class BABAfile implements BABAfileInterface{
 			writer.write(game);
 		}
 		catch (IOException e) {
-			System.out.println("sumn be IO wrong save");
+			System.out.println("SAVE is IO EXCEPTION");
 		}
 		catch (Exception e) {
-			System.out.println("sumn be wrong save");
+			System.out.println("SAVE is EXCEPTION");
 		}
 	}
 	
-	public char[][] load(File file) { // reads from savefile to a 2D array
-		char[][] array = new char[14][14];
+	public char[][] load(File file, int height, int width) { // reads from savefile to a 2D array
+		char[][] array = new char[height][width];            // size of array is decided by height & width:)
 		try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
-			for (int y = 0; y < 14; y++) {
+			for (int y = 0; y < height; y++) {
 				String line = reader.readLine();
-				for (int x = 0; x < 14; x++) {
+				for (int x = 0; x < width; x++) {
 					array[y][x] = line.charAt(x);
 				}
 			}	
 		}
 		catch (IOException e) {
-			System.out.println("sumn be IO wrong load");
+			System.out.println("LOAD is IO EXCEPTION");
 		}
 		catch (Exception e) {
-			System.out.println("sumn be wrong load");
+			System.out.println("LOAD is EXCEPTION");
 		}
 		return array;
 	}

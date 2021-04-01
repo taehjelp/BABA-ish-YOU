@@ -64,7 +64,7 @@ public class BABAcontroller {
 					game.getTile(x, y).setType('T', chara);
 				} else if (Character.isUpperCase(chara)) {
 					game.getTile(x, y).setType(chara); // type != text
-				} // defaults to ' ' (empty) if chara !alpha
+				} // tile defaults to ' ' (EMPTY) if chara != alpha
 			}
 		}
 	}
@@ -85,13 +85,13 @@ public class BABAcontroller {
 	}
 
 	private void drawBoard() {
-		for (int y = 0; y < game.getHeight(); y++) {
+		for (int y = 0; y < game.getHeight(); y++) { // fills each tile with an image according to type
 			for (int x = 0; x < game.getWidth(); x++) {
 				board.getChildren().get(y * game.getWidth() + x)
 						.setStyle("-fx-background-image: url( " + getTileImage(game.getTile(x, y)) + ";");
 			}
 		}
-		if (game.isWIN()) {
+		if (game.isWIN()) { // displays win/lose-text if applicable
 			winText.setText("YOU is WIN!");
 			winText.setFont(Font.font("Comic sans MS", 50));
 			winText.setFill(Color.GREEN);
@@ -145,8 +145,8 @@ public class BABAcontroller {
 			return "https://i.imgur.com/uaI2jy8.png)"; // empty, green
 		}
 	}
-
-	@FXML
+//buttons
+	@FXML // player movement
 	public void handleUp() {
 		game.moveUp();
 		drawBoard();
@@ -170,8 +170,8 @@ public class BABAcontroller {
 		drawBoard();
 	}
 
-	@FXML
-	public void handleReset() {
+	@FXML // resets board
+	public void handleReset() { 
 		if (board.getChildren().contains(loseText)) {
 			board.getChildren().remove(loseText);
 		}
@@ -185,14 +185,14 @@ public class BABAcontroller {
 		drawBoard();
 	}
 
-	@FXML
+	@FXML // saves board to file
 	public void handleSave() {
 		babaFile.save(game.toString(), saveFile); // board is saved to file
 	}
 
-	@FXML
+	@FXML // loads board from file
 	public void handleLoad() {
-		char[][] board = babaFile.load(saveFile);
+		char[][] board = babaFile.load(saveFile, height, width);
 		for (int y = 0; y < height; y++) {
 			for (int x = 0; x < width; x++) {
 				char chara = board[y][x];
@@ -200,15 +200,16 @@ public class BABAcontroller {
 					game.getTile(x, y).setType('T', chara);
 				} else if (Character.isUpperCase(chara)) {
 					game.getTile(x, y).setType(chara); // type != text
-				} // defaults to ' ' (empty) if chara !alpha
+				} else {
+					game.getTile(x, y).setType(' ');
+				}
 			}
 		}
-//		System.out.println(Arrays.deepToString(babaFile.load(saveFile))); // teste ka so loadast
-
+//		System.out.println(Arrays.deepToString(babaFile.load(saveFile))); // testing what gets loaded
 		drawBoard();
 	}
 
-	@FXML
+	@FXML // literally just displays a big BONK. a necessary feature.
 	public void handleBonk() {
 		bonkText.setText("BONK");
 		bonkText.setFont(Font.font("Comic sans MS", 120));

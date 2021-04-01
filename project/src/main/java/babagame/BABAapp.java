@@ -21,6 +21,3 @@ public class BABAapp extends Application {
 	}
 
 }
-
-//	eit problem: ein kan også utslette tekst om ein skubbe tekst inn i vegg:)))
-//	sry meinte Ein Feature
