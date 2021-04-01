@@ -145,33 +145,8 @@ public class BABAcontroller {
 			return "https://i.imgur.com/uaI2jy8.png)"; // empty, green
 		}
 	}
-//buttons
-	@FXML // player movement
-	public void handleUp() {
-		game.moveUp();
-		drawBoard();
-	}
-
-	@FXML
-	public void handleDown() {
-		game.moveDown();
-		drawBoard();
-	}
-
-	@FXML
-	public void handleLeft() {
-		game.moveLeft();
-		drawBoard();
-	}
-
-	@FXML
-	public void handleRight() {
-		game.moveRight();
-		drawBoard();
-	}
-
-	@FXML // resets board
-	public void handleReset() { 
+	
+	public void clearText() { 
 		if (board.getChildren().contains(loseText)) {
 			board.getChildren().remove(loseText);
 		}
@@ -181,6 +156,44 @@ public class BABAcontroller {
 		if (board.getChildren().contains(bonkText)) {
 			board.getChildren().remove(bonkText);
 		}
+	}
+	
+//buttons
+	@FXML // player movement
+	public void handleUp() {
+		if (!game.isWIN() && !game.isLOSE()) {
+			game.moveUp();
+			drawBoard();
+		}
+	}
+
+	@FXML
+	public void handleDown() {
+		if (!game.isWIN() && !game.isLOSE()) {
+		game.moveDown();
+		drawBoard();
+		}
+	}
+
+	@FXML
+	public void handleLeft() {
+		if (!game.isWIN() && !game.isLOSE()) {
+		game.moveLeft();
+		drawBoard();
+		}
+	}
+
+	@FXML
+	public void handleRight() {
+		if (!game.isWIN() && !game.isLOSE()) {
+		game.moveRight();
+		drawBoard();
+		}
+	}
+
+	@FXML // resets board
+	public void handleReset() { 
+		clearText();
 		setInitialGameState();
 		drawBoard();
 	}
@@ -192,6 +205,8 @@ public class BABAcontroller {
 
 	@FXML // loads board from file
 	public void handleLoad() {
+		clearText();
+		game = new BABAgame(height, width);
 		char[][] board = babaFile.load(saveFile, height, width);
 		for (int y = 0; y < height; y++) {
 			for (int x = 0; x < width; x++) {
