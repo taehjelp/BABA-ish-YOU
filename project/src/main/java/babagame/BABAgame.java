@@ -1,5 +1,8 @@
 package babagame;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class BABAgame {
 
 	private int height;
@@ -11,6 +14,9 @@ public class BABAgame {
 
 //const
 	public BABAgame(int width, int height) { // board setup
+		if (width < 0 || height < 0) {
+			throw new IllegalArgumentException("Height and width cannot be negative");
+		}
 		this.height = height;
 		this.width = width;
 		board = new BABAtile[height][width];
@@ -36,25 +42,26 @@ public class BABAgame {
 		if (!isTile(x, y)) {
 			throw new IllegalArgumentException("Coordinates out of bounds");
 		}
-		return board[y][x];
+		BABAtile tile = board[y][x];
+		return tile;
 	}
-
-	public boolean isTile(int x, int y) {
+	
+	private boolean isTile(int x, int y) {
 		return (x >= 0 && y >= 0 && x < getWidth() && y < getHeight());
 	}
 
 //type, text
 //	getters
-	public char tileType(int x, int y) {
+	private char tileType(int x, int y) {
 		return getTile(x, y).getType();
 	}
 
-	public char tileText(int x, int y) {
+	private char tileText(int x, int y) {
 		return getTile(x, y).getText();
 	}
 
 //	translation
-	public char nounToType(char noun) { // returns a noun's corresponding tile type
+	private char nounToType(char noun) { // returns a noun's corresponding tile type
 		return Character.toUpperCase(noun);
 	}
 
@@ -88,33 +95,38 @@ public class BABAgame {
 		return isLOSE;
 	}
 
-//rules	
-	public void updateRules() { // sets gamerules according to text on the board (BABA is YOU, WALL is FLAG etc)
+//rules		
+	private void updateRules() { // sets gamerules according to text on the board (BABA is YOU, WALL is FLAG etc)
 		resetAllProps(); // clearing current properties
 		for (int y = 0; y < height; y++) {
 			for (int x = 0; x < width; x++) {
 				if (board[y][x].isOperator(tileText(x, y))) { // if (x,y) == is-text:
-					if (getTile(x - 1, y).isNoun(tileText(x - 1, y)) // horizontal sentence, noun is property
-							&& getTile(x + 1, y).isProperty(tileText(x + 1, y))) {
-						setAllProps(tileText(x - 1, y), tileText(x + 1, y));
+					if (isTile(x - 1, y) && isTile(x + 1, y)) {
+						if (getTile(x - 1, y).isNoun(tileText(x - 1, y)) // horizontal sentence, noun is property
+								&& getTile(x + 1, y).isProperty(tileText(x + 1, y))) {
+							setAllProps(tileText(x - 1, y), tileText(x + 1, y));
+						}
+						if (getTile(x - 1, y).isNoun(tileText(x - 1, y)) // horizontal sentence, noun is noun
+								&& getTile(x + 1, y).isNoun(tileText(x + 1, y))) {
+							setAllNouns(tileText(x - 1, y), tileText(x + 1, y));
+						}
 					}
-					if (getTile(x, y - 1).isNoun(tileText(x, y - 1)) // vertical sentence, noun is property
-							&& getTile(x, y + 1).isProperty(tileText(x, y + 1))) {
-						setAllProps(tileText(x, y - 1), tileText(x, y + 1));
-					}
-					if (getTile(x - 1, y).isNoun(tileText(x - 1, y)) // horizontal sentence, noun is noun
-							&& getTile(x + 1, y).isNoun(tileText(x + 1, y))) {
-						setAllNouns(tileText(x - 1, y), tileText(x + 1, y));
-					}
-					if (getTile(x, y - 1).isNoun(tileText(x, y - 1)) // vertical sentence, noun is noun
-							&& getTile(x, y + 1).isNoun(tileText(x, y + 1))) {
-						setAllNouns(tileText(x, y - 1), tileText(x, y + 1));
+					if (isTile(x, y - 1) && isTile(x, y + 1) ) {
+						if (getTile(x, y - 1).isNoun(tileText(x, y - 1)) // vertical sentence, noun is property
+								&& getTile(x, y + 1).isProperty(tileText(x, y + 1))) {
+							setAllProps(tileText(x, y - 1), tileText(x, y + 1));
+						}
+						if (getTile(x, y - 1).isNoun(tileText(x, y - 1)) // vertical sentence, noun is noun
+								&& getTile(x, y + 1).isNoun(tileText(x, y + 1))) {
+							setAllNouns(tileText(x, y - 1), tileText(x, y + 1));
+						}
 					}
 				}
 			}
 		}
 	}
 
+//	 dei 3 neste: teste dei indirekte gjennom updateRules-test??
 //	property/noun setters
 	private void resetAllProps() { // resets property-bools of all tiles (except Text)
 		for (int y = 0; y < height; y++) {
@@ -128,7 +140,7 @@ public class BABAgame {
 		for (int y = 0; y < height; y++) { // input property
 			for (int x = 0; x < width; x++) {
 				if (noun == board[y][x].typeToNoun()) {
-					board[y][x].setBools(noun, property);
+					board[y][x].setBools(property);
 				}
 			}
 		}
@@ -140,7 +152,7 @@ public class BABAgame {
 				if (startNoun == board[y][x].typeToNoun()) {
 					if (endNoun == 't') { // text is a special case
 						board[y][x].setType(nounToType(endNoun), startNoun); // i.e: ROCK is TEXT turns all
-					} else { // rocks into text saying "rock"
+					} else {                                               // rocks into text saying "rock"
 						board[y][x].setType(nounToType(endNoun));
 					}
 				}
@@ -150,19 +162,27 @@ public class BABAgame {
 
 //public movement
 	public void moveUp() {
-		moveYou('u');
+		if (!isWIN() && !isLOSE()) {
+			moveYou('u');
+		}
 	}
 
 	public void moveDown() {
-		moveYou('d');
+		if (!isWIN() && !isLOSE()) {
+			moveYou('d');
+		}
 	}
 
 	public void moveLeft() {
-		moveYou('l');
+		if (!isWIN() && !isLOSE()) {
+			moveYou('l');
+		}
 	}
 
 	public void moveRight() {
-		moveYou('r');
+		if (!isWIN() && !isLOSE()) {
+			moveYou('r');
+		}
 	}
 
 //private movement
@@ -190,66 +210,74 @@ public class BABAgame {
 //	movement starter
 	private void moveYou(char dir) {
 		anyYOU(); // sets isLOSE = true if necessary
+		List<BABAtile> allYOU = new ArrayList<BABAtile>();
 		for (int y = 0; y < height; y++) {
 			for (int x = 0; x < width; x++) {
 				if (getTile(x, y).isYou()) {
-					movePos(x, y, dir);
+					allYOU.add(getTile(x, y));
 				}
 			}
 		}
+		for (int i = 0; i < allYOU.size(); i++) {
+			BABAtile tile = allYOU.get(i);
+			movePos(tile.getX(), tile.getY(), dir);
+			tile.setUnderType(' '); // stops cloning of YOU-items
+		}
+		anyYOU(); // sets isLOSE = true if necessary after a movement cycle
 	}
 
-//	actual movement
+//	actual movement	
 	private void movePos(int x, int y, char dir) { // x,y=pos. of object to be moved, dir=direction of movement
-		anyYOU(); // also runs updateRules
-		if (!isLOSE && !isWIN) {
-			BABAtile tile = getTile(x, y);
-			char type = tile.getType(); // type of current tile
-			int newY = newY(y, dir);
-			int newX = newX(x, dir);
-			if (isTile(newX, newY)) { // can't move out of bounds
-				BABAtile nextTile = getTile(newX, newY);
-				char nextType = nextTile.getType(); // type of next tile in movement direction
-
-				if (nextType == ' ') { // ' ': empty, can move to next tile
-					if (type == 'T') { // text is a special case
-						nextTile.setType(type, (tileText(x, y)));
-					} else {
-						nextTile.setType(type);
-					}
-					tile.setType(tile.getUnderType()); // underType is EMPTY by default
-				} else if (canMove(x, y, dir)) {
-					if (nextTile.isSolid() && nextTile.isMove()) { // next can be pushed
-						if (type != 'T') {
-							movePos(newX, newY, dir);
-							nextTile.setType(type);
-							tile.setType(tile.getUnderType());
-						} else {
-							movePos(newX, newY, dir);
-							nextTile.setType(type, tileText(x, y));
-							tile.setType(tile.getUnderType());
-						}
-					} else if (nextTile.isWin()) { // next makes you win!!
-						nextTile.setType(type);
-						tile.setType(tile.getUnderType());
-						isWIN = true;
-					} else { // can go through next
-						nextTile.setUnderType(nextType); // stores type of the non-solid for later
-						if (type != 'T') {
-							nextTile.setType(type);
-						} else {
-							nextTile.setType(type, tileText(x, y));
-						}
-						tile.setType(tile.getUnderType());
-					}
+		BABAtile tile = getTile(x, y);
+		char type = tile.getType(); // type of current tile
+		int newY = newY(y, dir);
+		int newX = newX(x, dir);
+		if (isTile(newX, newY)) { // can't move out of bounds
+			BABAtile nextTile = getTile(newX, newY);
+			char nextType = nextTile.getType(); // type of next tile in movement direction
+			
+			if (nextType == ' ') { // ' ': empty, can move to next tile
+				if (type == 'T') { // text is a special case
+					nextTile.setType(type, (tileText(x, y)));
+				} else {
+					nextTile.setType(type);
 				}
-				// nothing happens if nextTile=solid and != move
-			}
+				tile.setType(tile.getUnderType()); // underType is EMPTY by default
+			} else if (canMove(x, y, dir)) {
+				if (nextTile.isYou()) { // ensures that YOU-items can move in the same direction
+					tile.setType(tile.getUnderType());
+					nextTile.setUnderType(nextType);
+				}
+				else if (nextTile.isSolid() && nextTile.isMove()) { // next can be pushed
+					if (type != 'T') {
+						movePos(newX, newY, dir);
+						nextTile.setType(type);
+						tile.setType(tile.getUnderType());
+					} else {
+						movePos(newX, newY, dir);
+						nextTile.setType(type, tileText(x, y));
+						tile.setType(tile.getUnderType());
+					}
+				} else if (nextTile.isWin()) { // next makes you win!!
+					nextTile.setType(type);
+					tile.setType(tile.getUnderType());
+					isWIN = true;
+				} else if (!nextTile.isSolid()) { // can go through next
+					nextTile.setUnderType(nextType); // stores type of the non-solid for later
+					if (type != 'T') {
+						nextTile.setType(type);
+					} else {
+						nextTile.setType(type, tileText(x, y));
+					}
+					tile.setType(tile.getUnderType());
+				}
+			}		
+			// nothing happens if nextTile=solid and != move
 		}
 	}
 
 //	movecheck - is there an empty/non-solid tile for an item to move to?
-	public boolean canMove(int x, int y, char dir) {
+	private boolean canMove(int x, int y, char dir) {
 		boolean canMove = false;
 		while (isTile(x, y) && canMove == false) {
 			BABAtile tile = getTile(x, y);

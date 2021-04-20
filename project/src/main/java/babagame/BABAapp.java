@@ -21,3 +21,5 @@ public class BABAapp extends Application {
 	}
 
 }
+
+// TODO noter meg kor i koden dei ulike krava n shit dukke opp

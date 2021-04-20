@@ -3,10 +3,10 @@ package babagame;
 public class BABAproperty {
 
 	private char property;
-
-	public BABAproperty(char property) {
+	
+	public void setProperty(char property) {
 		if (!"yvps".contains(String.valueOf(property))) { // yvps = YOU, WIN, PUSH, STOP
-			throw new IllegalArgumentException("invalid noun or property");
+			throw new IllegalArgumentException("invalid property");
 		} else {
 			this.property = property;
 		}
@@ -28,4 +28,5 @@ public class BABAproperty {
 	public boolean isWin() {
 		return (property == 'v'); // WIN is win
 	}
+
 }

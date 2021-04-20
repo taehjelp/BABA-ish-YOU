@@ -8,7 +8,7 @@ import java.io.FileWriter;
 import java.io.IOException;
 
 public class BABAfile implements BABAfileInterface{
-
+	
 	public void save(String game, File file) { // saves current board as the BABAgame toString
 		try (BufferedWriter writer = new BufferedWriter(new FileWriter(file))) {
 			writer.write(game);
@@ -20,8 +20,11 @@ public class BABAfile implements BABAfileInterface{
 			System.out.println("SAVE is EXCEPTION");
 		}
 	}
-	
+
 	public char[][] load(File file, int height, int width) { // reads from savefile to a 2D array
+		if (height < 0 || width < 0) {
+			throw new IllegalArgumentException("Height and width cannot be negative");
+		}
 		char[][] array = new char[height][width];            // size of array is decided by height & width:)
 		try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
 			for (int y = 0; y < height; y++) {
@@ -33,9 +36,11 @@ public class BABAfile implements BABAfileInterface{
 		}
 		catch (IOException e) {
 			System.out.println("LOAD is IO EXCEPTION");
+			return null;
 		}
 		catch (Exception e) {
 			System.out.println("LOAD is EXCEPTION");
+			return null;
 		}
 		return array;
 	}

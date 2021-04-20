@@ -2,7 +2,7 @@ package babagame;
 
 public class BABAtile {
 	private char type = ' '; // current type of the tile
-	private char underType = ' '; // stores non-solid type if a move-obj moves on top of it
+	private char underType = ' '; // memory:) stores current type if a move-obj moves on top of it
 	private char text;
 	private int x;
 	private int y;
@@ -12,12 +12,17 @@ public class BABAtile {
 	private boolean win = false;
 
 	private String types = "BTFRW "; // BTFRW' ' = BABA, TEXT, FLAG, ROCK, WALL, EMPTY
-	private String nouns = "btfrw"; // btfrw = BABA, TEXT, FLAG, ROCK, WALL
+	private String nouns = "btfrw"; // btfrw = baba, text, flag, rock, wall
 	private String operators = "i"; // i = is
 	private String properties = "yvps"; // yvps = YOU, WIN, PUSH, STOP
 	
+	BABAproperty prop = new BABAproperty();
+
 //const
 	public BABAtile(int x, int y) {
+		if (x < 0 || y < 0) {
+			throw new IllegalArgumentException("Position cannot be negative");
+		}
 		this.x = x;
 		this.y = y;
 	}
@@ -87,10 +92,7 @@ public class BABAtile {
 //undertype 
 //	setter
 	public void setUnderType(char type) { // stores non-solid type if a move-obj moves on top of it
-		if (!solid == false) {
-			throw new IllegalArgumentException("tile cannot be solid");
-		}
-		underType = type;
+			underType = type;             // + some other stuff:)
 	}
 	
 //	getter
@@ -120,17 +122,19 @@ public class BABAtile {
 	
 //bools/properties
 //	setters
-	public void setBools(char noun, char property) { // sets underlying properties of a tile,
-		if (!isNoun(noun) || !isProperty(property)) { // represented by bools
-			throw new IllegalArgumentException("invalid noun or property");
+	public void setBools(char property) { // sets underlying properties of a tile,
+		if (!isProperty(property)) {      // represented by bools
+			throw new IllegalArgumentException("invalid property");
 		}
-		BABAproperty prop = new BABAproperty(property);
-		solid = prop.isSolid();
-		move = prop.isMove();
+		prop.setProperty(property);
+		if (getType() != 'T') { // text is always solid and move
+			solid = prop.isSolid();
+			move = prop.isMove();
+		}		
 		you = prop.isYou();
 		win = prop.isWin();
 	}
-
+	
 	public void resetBools() { // resets bools of the tile to the default according to type
 		if (getType() != 'T') { // TEXT is always PUSH (solid + move)
 			solid = false;
@@ -142,7 +146,7 @@ public class BABAtile {
 	}
 	
 //	getters
-	public boolean isSolid() {
+	public boolean isSolid() { // lowercase because they return the underlying properties:)
 		return solid;
 	}
 
