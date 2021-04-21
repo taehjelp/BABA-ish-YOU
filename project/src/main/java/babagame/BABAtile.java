@@ -15,7 +15,7 @@ public class BABAtile {
 	private String nouns = "btfrw"; // btfrw = baba, text, flag, rock, wall
 	private String operators = "i"; // i = is
 	private String properties = "yvps"; // yvps = YOU, WIN, PUSH, STOP
-	
+
 	BABAproperty prop = new BABAproperty();
 
 //const
@@ -26,6 +26,7 @@ public class BABAtile {
 		this.x = x;
 		this.y = y;
 	}
+
 //position
 	public int getX() {
 		return x;
@@ -57,17 +58,17 @@ public class BABAtile {
 		solid = true; // set TEXT is PUSH (solid + move) by default
 		move = true;
 	}
-	
+
 //	getter
 	public char getType() {
 		return type;
 	}
-	
+
 //	translation
 	public char typeToNoun() { // returns a type's corresponding noun
 		return Character.toLowerCase(type);
 	}
-	
+
 //	checks
 	public boolean isBABA() {
 		return type == 'B';
@@ -88,24 +89,24 @@ public class BABAtile {
 	public boolean isWALL() {
 		return type == 'W';
 	}
-	
+
 //undertype 
 //	setter
 	public void setUnderType(char type) { // stores non-solid type if a move-obj moves on top of it
-			underType = type;             // + some other stuff:)
+		underType = type; // + some other stuff:)
 	}
-	
+
 //	getter
 	public char getUnderType() {
 		return underType;
 	}
-	
+
 //text 
 //	getter
 	public char getText() {
 		return text;
 	}
-	
+
 //text 
 //	checks
 	public boolean isNoun(char text) {
@@ -119,22 +120,22 @@ public class BABAtile {
 	public boolean isProperty(char text) {
 		return properties.contains(String.valueOf(text));
 	}
-	
+
 //bools/properties
 //	setters
 	public void setBools(char property) { // sets underlying properties of a tile,
-		if (!isProperty(property)) {      // represented by bools
+		if (!isProperty(property)) { // represented by bools
 			throw new IllegalArgumentException("invalid property");
 		}
 		prop.setProperty(property);
 		if (getType() != 'T') { // text is always solid and move
 			solid = prop.isSolid();
 			move = prop.isMove();
-		}		
+		}
 		you = prop.isYou();
 		win = prop.isWin();
 	}
-	
+
 	public void resetBools() { // resets bools of the tile to the default according to type
 		if (getType() != 'T') { // TEXT is always PUSH (solid + move)
 			solid = false;
@@ -144,7 +145,7 @@ public class BABAtile {
 		you = false;
 		win = false;
 	}
-	
+
 //	getters
 	public boolean isSolid() { // lowercase because they return the underlying properties:)
 		return solid;

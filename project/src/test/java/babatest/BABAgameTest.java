@@ -11,18 +11,18 @@ import babagame.BABAgame;
 
 public class BABAgameTest {
 	private BABAgame game;
-	
+
 	@BeforeEach
 	void setUp() {
-		game = new BABAgame(6,7);
-		                   // 0   1   2   3   4   5
-		char board[][] =   {{'B','B',' ','B','B','W'},// 0   // 1 ned: bryte biy (isLOSE=true) (og rip), laga rif
-							{' ',' ','R','b','i','y'},// 1   // 1 høgre: teste BB' ' vs BBW, teste B mot Out Of Bounds
-							{'F','B',' ',' ',' ',' '},// 2   // 1 venstre: B skubbe R, B til F => isWIN=true
-							{' ','R','B',' ',' ','B'},// 3   // 2 opp: bryte rip, B går over R
-							{' ',' ',' ',' ',' ','f'},// 4  
-							{'f','i','v','r','i','p'},// 5
-							{'w','i','s','B',' ',' '}};//6
+		game = new BABAgame(6, 7);
+		
+		char board[][] = { { 'B', 'B', ' ', 'B', 'B', 'W' }, //  1 ned: bryte biy (isLOSE=true) (og rip), laga rif
+						   { ' ', ' ', 'R', 'b', 'i', 'y' }, //  1 høgre: teste BB' ' vs BBW, teste B mot Out Of Bounds
+						   { 'F', 'B', ' ', ' ', ' ', ' ' }, //  1 venstre: B skubbe R, B til F => isWIN=true
+						   { ' ', 'R', 'B', ' ', ' ', 'B' }, //  2 opp: bryte rip, B går over R
+						   { ' ', ' ', ' ', ' ', ' ', 'f' }, 
+						   { 'f', 'i', 'v', 'r', 'i', 'p' }, 
+						   { 'w', 'i', 's', 'B', ' ', ' ' } };
 		for (int y = 0; y < 7; y++) { // sets the type of each tile according to board[][]
 			for (int x = 0; x < 6; x++) {
 				char chara = board[y][x];
@@ -34,12 +34,13 @@ public class BABAgameTest {
 			}
 		}
 	}
-	
+
 	@Test
 	@DisplayName("Testing constructor")
 	void testConstructor() {
 		assertThrows(IllegalArgumentException.class, () -> {
-			game = new BABAgame(-1,2);;
+			game = new BABAgame(-1, 2);
+			;
 		}, "invalid height/width should throw IllegalArgumentException");
 	}
 
@@ -47,17 +48,19 @@ public class BABAgameTest {
 	@DisplayName("Testing getTile")
 	void testGetTile() {
 		assertThrows(IllegalArgumentException.class, () -> {
-			game.getTile(-1,0);;
+			game.getTile(-1, 0);
+			;
 		}, "invalid coordinates should throw IllegalArgumentException");
 		assertThrows(IllegalArgumentException.class, () -> {
-			game.getTile(20,0);;
+			game.getTile(20, 0);
+			;
 		}, "invalid coordinates should throw IllegalArgumentException");
 		assertEquals('B', (game.getTile(0, 0)).getType(), "Tile should be of type BABA:)");
 	}
-	
+
 	@Test
 	@DisplayName("Testing w/ moveUp: underTypes, updateRules + resetAllProps")
-	void testUp() { 
+	void testUp() {
 		game.moveUp();
 		game.moveUp();
 		game.moveUp();
@@ -67,7 +70,7 @@ public class BABAgameTest {
 		assertEquals(false, game.getTile(2, 1).isMove(), "ROCK should NOT be PUSH: !Move");
 		assertEquals(false, game.getTile(2, 1).isSolid(), "ROCK should NOT be PUSH: !Solid");
 	}
-	
+
 	@Test
 	@DisplayName("Testing w/ moveDown: anyYOU + isLOSE, updateRules + setAllNouns")
 	void testDown() {
@@ -77,7 +80,7 @@ public class BABAgameTest {
 		// Testing that items of one type get set to another if a rule dictates is
 		assertEquals(true, game.getTile(2, 1).isFLAG(), "The previous ROCK should now be FLAG");
 	}
-	
+
 	@Test
 	@DisplayName("Testing w/ moveLeft: updateRules + setAllProps, moveYou + movePos, isWIN")
 	void testLeft() {
@@ -91,18 +94,20 @@ public class BABAgameTest {
 		// Testing that isWIN is set to true if a YOU-item overlaps with a WIN-item
 		assertEquals(true, game.isWIN(), "Game should be WIN");
 	}
-	
+
 	@Test
 	@DisplayName("Testing w/ moveRight: canMove + moveYou + movePos")
 	void testRight() {
 		game.moveRight();
-		// Testing that several YOU-items in a row will move if there is an empty/non-solid space for them to move into
+		// Testing that several YOU-items in a row will move if there is an
+		// empty/non-solid space for them to move into
 		assertEquals(true, game.getTile(1, 0).isBABA(), "BABA should have moved right");
 		assertEquals(true, game.getTile(2, 0).isBABA(), "BABA should have moved right");
-		// Testing that several YOU-items in a row will NOT move if there is no empty/non-solid space for them to move into
+		// Testing that several YOU-items in a row will NOT move if there is no
+		// empty/non-solid space for them to move into
 		assertEquals(true, game.getTile(3, 0).isBABA(), "BABA should NOT have moved right");
 		assertEquals(true, game.getTile(4, 0).isBABA(), "BABA should NOT have moved right");
-		// Testing that an item does not move if next tile is oout of bounds
+		// Testing that an item does not move if next tile is out of bounds
 		assertEquals(true, game.getTile(5, 3).isBABA(), "BABA should not move out of bounds");
 	}
 }

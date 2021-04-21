@@ -23,17 +23,17 @@ import babagame.BABAgame;
 
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class BABAfileTest {
-	private BABAgame game = new BABAgame(3,3);
+	private BABAgame game = new BABAgame(3, 3);
 	private BABAfile babaFile = new BABAfile();
-	String rootPath = new File("").getAbsolutePath(); 
+	String rootPath = new File("").getAbsolutePath();
 	private File testSaveFile = new File(rootPath + "\\testSaveFile.txt");
 	private File testEmptyFile = new File(rootPath + "\\testEmptyFile.txt");
-	
+	private char[][] board = { { ' ', 'b', 'B' }, 
+							   { 'W', 'i', 'w' }, 
+							   { 'F', 'y', ' ' } };
+
 	@BeforeAll
 	public void setUp() {
-		char board[][] = {{' ', 'b', 'B'},
-						  {'W', 'i', 'w'},
-						  {'F', 'y', ' '}};
 		for (int y = 0; y < 3; y++) { // sets the type of each tile according to board[][]
 			for (int x = 0; x < 3; x++) {
 				char chara = board[y][x];
@@ -45,7 +45,7 @@ public class BABAfileTest {
 			}
 		}
 	}
-	
+
 	@Test
 	@DisplayName("Testing save")
 	void testSave() {
@@ -53,44 +53,39 @@ public class BABAfileTest {
 		String saved = "";
 		try (BufferedReader reader = new BufferedReader(new FileReader(testSaveFile))) {
 			for (int i = 0; i < 3; i++) {
-				saved += reader.readLine() + "\n";	
+				saved += reader.readLine() + "\n";
 			}
-		}
-		catch (IOException e) {
+		} catch (IOException e) {
 			System.out.println("IO EXCEPTION");
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			System.out.println("EXCEPTION");
 		}
 		assertEquals(game.toString(), saved, "Saved string should match toString of game:)");
 	}
-	
+
 	@Test
 	@DisplayName("Testing load")
 	void testLoad() {
-		char[][] board = {{' ','b','B'},{'W','i','w'},{'F','y',' '}};
 		assertThrows(IllegalArgumentException.class, () -> {
-			babaFile.load(testSaveFile,-1,3);;
+			babaFile.load(testSaveFile, -1, 3);
+			;
 		}, "invalid height/width should throw IllegalArgumentException");
-		
+
 		try (BufferedWriter writer = new BufferedWriter(new FileWriter(testSaveFile))) {
 			writer.write(game.toString());
-		}
-		catch (IOException e) {
+		} catch (IOException e) {
 			System.out.println("IO EXCEPTION");
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			System.out.println("EXCEPTION");
 		}
 		assertArrayEquals((babaFile.load(testSaveFile, 3, 3)), board, "loaded string should match board:)");
 		try {
 			babaFile.load(testEmptyFile, 3, 3);
-		}
-		catch (Exception e) {
+		} catch (Exception e) {
 			fail("should not be able to load empty file");
 		}
 	}
-	
+
 	@AfterAll
 	void teardown() {
 		testSaveFile.delete();

@@ -4,5 +4,6 @@ open module todolist {
 	requires javafx.fxml;
 	requires javafx.graphics;
 	requires java.base;
+	requires java.desktop;
 }
 

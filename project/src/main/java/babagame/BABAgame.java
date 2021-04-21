@@ -45,7 +45,7 @@ public class BABAgame {
 		BABAtile tile = board[y][x];
 		return tile;
 	}
-	
+
 	private boolean isTile(int x, int y) {
 		return (x >= 0 && y >= 0 && x < getWidth() && y < getHeight());
 	}
@@ -111,7 +111,7 @@ public class BABAgame {
 							setAllNouns(tileText(x - 1, y), tileText(x + 1, y));
 						}
 					}
-					if (isTile(x, y - 1) && isTile(x, y + 1) ) {
+					if (isTile(x, y - 1) && isTile(x, y + 1)) {
 						if (getTile(x, y - 1).isNoun(tileText(x, y - 1)) // vertical sentence, noun is property
 								&& getTile(x, y + 1).isProperty(tileText(x, y + 1))) {
 							setAllProps(tileText(x, y - 1), tileText(x, y + 1));
@@ -152,7 +152,7 @@ public class BABAgame {
 				if (startNoun == board[y][x].typeToNoun()) {
 					if (endNoun == 't') { // text is a special case
 						board[y][x].setType(nounToType(endNoun), startNoun); // i.e: ROCK is TEXT turns all
-					} else {                                               // rocks into text saying "rock"
+					} else { // rocks into text saying "rock"
 						board[y][x].setType(nounToType(endNoun));
 					}
 				}
@@ -235,7 +235,7 @@ public class BABAgame {
 		if (isTile(newX, newY)) { // can't move out of bounds
 			BABAtile nextTile = getTile(newX, newY);
 			char nextType = nextTile.getType(); // type of next tile in movement direction
-			
+
 			if (nextType == ' ') { // ' ': empty, can move to next tile
 				if (type == 'T') { // text is a special case
 					nextTile.setType(type, (tileText(x, y)));
@@ -247,8 +247,7 @@ public class BABAgame {
 				if (nextTile.isYou()) { // ensures that YOU-items can move in the same direction
 					tile.setType(tile.getUnderType());
 					nextTile.setUnderType(nextType);
-				}
-				else if (nextTile.isSolid() && nextTile.isMove()) { // next can be pushed
+				} else if (nextTile.isSolid() && nextTile.isMove()) { // next can be pushed
 					if (type != 'T') {
 						movePos(newX, newY, dir);
 						nextTile.setType(type);
@@ -271,7 +270,7 @@ public class BABAgame {
 					}
 					tile.setType(tile.getUnderType());
 				}
-			}		
+			}
 			// nothing happens if nextTile=solid and != move
 		}
 	}

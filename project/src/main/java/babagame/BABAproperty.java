@@ -3,7 +3,7 @@ package babagame;
 public class BABAproperty {
 
 	private char property;
-	
+
 	public void setProperty(char property) {
 		if (!"yvps".contains(String.valueOf(property))) { // yvps = YOU, WIN, PUSH, STOP
 			throw new IllegalArgumentException("invalid property");

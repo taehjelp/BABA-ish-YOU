@@ -12,10 +12,10 @@ public class BABAcontroller {
 	private int height;
 	private int width;
 	private BABAfile babaFile = new BABAfile();
-	String rootPath = new File("").getAbsolutePath(); 
+	String rootPath = new File("").getAbsolutePath().replace("\\", "/");
 	String filePath = rootPath + "/src/main/java/babagame/saveFile.txt";
 	private File saveFile = new File(filePath);
-	
+
 	@FXML
 	Pane board;
 	@FXML
@@ -30,44 +30,39 @@ public class BABAcontroller {
 	public void initialize() {
 		setInitialGameState();
 		createBoard();
-		drawBoard();
+		try {
+			drawBoard();
+		} catch (Error e) {
+			if (!board.getChildren().contains(errorText)) {
+				errorText.setText("IMAGE is ERROR");
+				errorText.setFont(Font.font("Comic sans MS", 45));
+				errorText.setFill(Color.BLACK);
+				errorText.setTranslateX(42.0);
+				errorText.setTranslateY(200.0);
+				board.getChildren().add(errorText);
+			}
+		}
 	}
 
 	private void setInitialGameState() {
 		height = 14;
 		width = 14;
 		game = new BABAgame(height, width);
-		
-//		// testboard
-//		char board[][] =   {{'B','B',' ','B','B','W',' ',' ',' ',' ',' ',' ',' ',' '},// 0   // 1 ned: bryte biy (isLOSE=true) (og rip), laga rif
-//							{' ',' ','R','b','i','y',' ',' ',' ',' ',' ',' ',' ',' '},// 1   // 1 høgre: teste BB' ' vs BBW, teste B mot Out Of Bounds
-//							{'F','B',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' '},// 2   // 1 venstre: B skubbe R, B til F => isWIN=true
-//							{' ','R','B',' ',' ','B',' ',' ',' ',' ',' ',' ',' ',' '},// 3   // 2 opp: bryte rip, B går over R
-//							{' ',' ',' ',' ',' ','f',' ',' ',' ',' ',' ',' ',' ',' '},// 4  
-//							{'f','i','v','r','i','p',' ',' ',' ',' ',' ',' ',' ',' '},// 5
-//							{'w','i','s','B',' ',' ',' ',' ',' ',' ',' ',' ',' ',' '},
-//							{' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' '},
-//							{' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' '},
-//							{' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' '},
-//							{' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' '},
-//							{' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' '},
-//							{' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' '},
-//							{' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' ',' '}};
 
-		char[][] board =   {{ ' ', ' ', ' ', ' ', 'R', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ' },
-							{ 'R', 't', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'w', 'i', 's', ' ', ' ' },
-							{ ' ', 'i', ' ', ' ', ' ', ' ', 'W', 'W', 'W', 'W', 'W', 'W', 'W', ' ' },
-							{ ' ', ' ', ' ', ' ', ' ', ' ', 'R', ' ', ' ', 'F', ' ', ' ', 'W', ' ' },
-							{ ' ', ' ', 'R', ' ', ' ', ' ', 'W', ' ', ' ', ' ', 'R', ' ', 'W', ' ' },
-							{ ' ', ' ', ' ', ' ', ' ', ' ', 'W', ' ', 'f', 'i', ' ', ' ', 'W', ' ' },
-							{ ' ', ' ', ' ', ' ', ' ', ' ', 'W', 'W', 'W', 'W', 'v', ' ', 'W', ' ' },
-							{ ' ', 'F', ' ', 'R', ' ', ' ', ' ', ' ', ' ', 'W', ' ', ' ', 'W', ' ' },
-							{ 'R', 'R', 'R', 'R', 'R', 'R', 'R', 'R', 'R', 'W', 'W', 'W', 'W', ' ' },
-							{ ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ' },
-							{ ' ', ' ', ' ', ' ', ' ', ' ', 'p', ' ', ' ', 'B', ' ', ' ', ' ', ' ' },
-							{ ' ', ' ', ' ', 'r', 'i', 's', ' ', ' ', ' ', 'b', 'i', 'y', ' ', ' ' },
-							{ ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ' },
-							{ ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ' }};
+		char[][] board = { { ' ', ' ', ' ', ' ', 'R', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ' },
+				{ 'R', 't', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'w', 'i', 's', ' ', ' ' },
+				{ ' ', 'i', ' ', ' ', ' ', ' ', 'W', 'W', 'W', 'W', 'W', 'W', 'W', ' ' },
+				{ ' ', ' ', ' ', ' ', ' ', ' ', 'R', ' ', ' ', 'F', ' ', ' ', 'W', ' ' },
+				{ ' ', ' ', 'R', ' ', ' ', ' ', 'W', ' ', ' ', ' ', 'R', ' ', 'W', ' ' },
+				{ ' ', ' ', ' ', ' ', ' ', ' ', 'W', ' ', 'f', 'i', ' ', ' ', 'W', ' ' },
+				{ ' ', ' ', ' ', ' ', ' ', ' ', 'W', 'W', 'W', 'W', 'v', ' ', 'W', ' ' },
+				{ ' ', 'F', ' ', 'R', ' ', ' ', ' ', ' ', ' ', 'W', ' ', ' ', 'W', ' ' },
+				{ 'R', 'R', 'R', 'R', 'R', 'R', 'R', 'R', 'R', 'W', 'W', 'W', 'W', ' ' },
+				{ ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ' },
+				{ ' ', ' ', ' ', ' ', ' ', ' ', 'p', ' ', ' ', 'B', ' ', ' ', ' ', ' ' },
+				{ ' ', ' ', ' ', 'r', 'i', 's', ' ', ' ', ' ', 'b', 'i', 'y', ' ', ' ' },
+				{ ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ' },
+				{ ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ' } };
 
 		for (int y = 0; y < height; y++) { // sets the type of each tile according to board[][]
 			for (int x = 0; x < width; x++) {
@@ -99,76 +94,77 @@ public class BABAcontroller {
 	private void drawBoard() {
 		for (int y = 0; y < game.getHeight(); y++) { // fills each tile with an image according to type
 			for (int x = 0; x < game.getWidth(); x++) {
-				board.getChildren().get(y * game.getWidth() + x)
-						.setStyle("-fx-background-image: url(" + getTileImage(game.getTile(x, y)) + ");");
+				board.getChildren().get(y * game.getWidth() + x).setStyle("-fx-background-image: url(" + "file:///"
+						+ rootPath + "/src/main/resources/images/" + getTileImage(game.getTile(x, y)) + ");");
 			}
-		}
-		if (game.isWIN() && !board.getChildren().contains(winText)) { // displays win/lose-text if applicable
-			winText.setText("YOU is WIN!");                           // and text is not already there
-			winText.setFont(Font.font("Comic sans MS", 50));
-			winText.setFill(Color.GREEN);
-			winText.setTranslateX(45.0);
-			winText.setTranslateY(200.0);
+		} // displays win/lose-text if applicable and text is not already there
+		if (game.isWIN() && !board.getChildren().contains(winText)) {
+			winText.setText("YOU is WIN!");
+			winText.setFont(Font.font("Comic sans MS", 60));
+			winText.setFill(Color.rgb(91, 133, 0));
+			winText.setTranslateX(25.0);
+			winText.setTranslateY(220.0);
 			board.getChildren().add(winText);
 		} else if (game.isLOSE() && !board.getChildren().contains(loseText)) {
 			loseText.setText("YOU is CRINGE");
 			loseText.setFont(Font.font("Comic sans MS", 50));
-			loseText.setFill(Color.RED);
+			loseText.setFill(Color.rgb(194, 19, 6));
 			loseText.setTranslateX(25.0);
 			loseText.setTranslateY(200.0);
 			board.getChildren().add(loseText);
 		}
 	}
-	
-	private String getTileImage(BABAtile tile) { // URLs are image links for each tile type
+
+	private String getTileImage(BABAtile tile) {
 		if (tile.isBABA())
-			return "https://i.imgur.com/09gR1P4.png";
+			return "BABA.png";
 		else if (tile.isFLAG())
-			return "https://i.imgur.com/BUU86r1.png";
+			return "FLAG.png";
 		else if (tile.isROCK())
-			return "https://i.imgur.com/IOPBf9F.png";
+			return "ROCK.png";
 		else if (tile.isWALL())
-			return "https://i.imgur.com/ULUiNog.png";
+			return "WALL.png";
 		else if (tile.isTEXT()) { // text types:
 			if (tile.getText() == 'b') // baba
-				return "https://i.imgur.com/yR99xQd.png";
+				return "babatext.png";
 			else if (tile.getText() == 't') // text
-				return "https://i.imgur.com/RSTsbBd.png";
+				return "TEXTtext.png";
 			else if (tile.getText() == 'f') // flag
-				return "https://i.imgur.com/X6fgDd1.png";
+				return "flagtext.png";
 			else if (tile.getText() == 'r') // rock
-				return "https://i.imgur.com/hC4seaY.png";
+				return "rocktext.png";
 			else if (tile.getText() == 'w') // wall
-				return "https://i.imgur.com/nntZQai.png";
+				return "walltext.png";
 			else if (tile.getText() == 'i') // is
-				return "https://i.imgur.com/3RkNnHP.png";
+				return "istext.png";
 			else if (tile.getText() == 'y') // you
-				return "https://i.imgur.com/HZClbQU.png";
+				return "YOUtext.png";
 			else if (tile.getText() == 'v') // win
-				return "https://i.imgur.com/cttkVje.png";
+				return "WINtext.png";
 			else if (tile.getText() == 'p') // push
-				return "https://i.imgur.com/yfBernZ.png";
+				return "PUSHtext.png";
 			else if (tile.getText() == 's') // stop
-				return "https://i.imgur.com/NykHztb.png";
+				return "STOPtext.png";
 			else
-				return "https://i.imgur.com/uaI2jy8.png";
-		}
-		else 
-			return "https://i.imgur.com/uaI2jy8.png"; // empty, green
+				return "EMPTY.png";
+		} else
+			return "EMPTY.png"; // empty, green
 	}
-	
-	public void clearText() { 
+
+	public void clearText() {
 		if (board.getChildren().contains(loseText)) {
 			board.getChildren().remove(loseText);
-		}
-		else if (board.getChildren().contains(winText)) {
+		} else if (board.getChildren().contains(winText)) {
 			board.getChildren().remove(winText);
 		}
 		if (board.getChildren().contains(bonkText)) {
 			board.getChildren().remove(bonkText);
 		}
+		if (board.getChildren().contains(errorText)) {
+			board.getChildren().remove(errorText);
+		}
 	}
-	
+
 	public void errorText() { // adds temporary error-message if loading went wrong
 		if (!board.getChildren().contains(errorText)) {
 			errorText.setText("LOAD is ERROR");
@@ -179,7 +175,7 @@ public class BABAcontroller {
 			board.getChildren().add(errorText);
 		}
 	}
-	
+
 //buttons
 	@FXML // player movement
 	public void handleUp() {
@@ -218,7 +214,7 @@ public class BABAcontroller {
 	}
 
 	@FXML // resets board
-	public void handleReset() { 
+	public void handleReset() {
 		clearText();
 		setInitialGameState();
 		drawBoard();
@@ -235,8 +231,7 @@ public class BABAcontroller {
 		char[][] board = babaFile.load(saveFile, height, width);
 		if (board == null) {
 			errorText();
-		}
-		else {
+		} else {
 			game = new BABAgame(height, width);
 			for (int y = 0; y < height; y++) {
 				for (int x = 0; x < width; x++) {
@@ -258,13 +253,13 @@ public class BABAcontroller {
 	public void handleBonk() {
 		if (!board.getChildren().contains(bonkText)) {
 			bonkText.setText("BONK");
-			bonkText.setFont(Font.font("Comic sans MS", 120));
+			bonkText.setFont(Font.font("Comic sans MS", 145));
 			bonkText.setFill(Color.BLACK);
-			bonkText.setTranslateX(45.0);
-			bonkText.setTranslateY(200.0);
+			bonkText.setOpacity(0.8);
+			bonkText.setTranslateX(0.0);
+			bonkText.setTranslateY(250.0);
 			board.getChildren().add(bonkText);
-		}
-		else {
+		} else {
 			board.getChildren().remove(bonkText); // removes bonkText if it's already there
 		}
 
