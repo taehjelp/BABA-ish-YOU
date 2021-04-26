@@ -22,9 +22,8 @@ public class BABAtile {
 
 //const
 	public BABAtile(int x, int y) {
-		if (x < 0 || y < 0) {
-			throw new IllegalArgumentException("Position cannot be negative");
-		}
+		if (x < 0 || y < 0)
+			throw new IllegalArgumentException("position cannot be negative");
 		this.x = x;
 		this.y = y;
 	}
@@ -41,20 +40,18 @@ public class BABAtile {
 //type 
 //	setters
 	public void setType(char type) { // sets type if valid
-		if (!types.contains(String.valueOf(type))) {
+		if (!types.contains(String.valueOf(type)))
 			throw new IllegalArgumentException("invalid type");
-		} else if (type == 'T') {
+		else if (type == 'T')
 			throw new IllegalArgumentException("text required");
-		}
 		this.type = type;
 	}
 
 	public void setType(char type, char text) { // if type = Text: sets type and text if valid
-		if (type != 'T') {
+		if (type != 'T')
 			throw new IllegalArgumentException("type must be TEXT");
-		} else if (!((isNoun(text) || isOperator(text) || isProperty(text)))) {
-			throw new IllegalArgumentException("invalid text");
-		}
+		else if (!((isNoun(text) || isOperator(text) || isProperty(text))))
+			throw new IllegalArgumentException("invalid text, must be noun/operator/text");
 		this.type = type;
 		this.text = text;
 		solid = true; // set TEXT is PUSH (solid + move) by default
@@ -95,9 +92,8 @@ public class BABAtile {
 //undertype 
 //	setter
 	public void setUnderType(char type) { // stores non-solid type if a move-obj moves on top of it
-		if (!types.contains(String.valueOf(type))) {                        // + some other stuff:)
+		if (!types.contains(String.valueOf(type)))                        // + some other stuff:)
 			throw new IllegalArgumentException("invalid type");
-		}
 		underType = type; 
 	}
 
@@ -129,9 +125,8 @@ public class BABAtile {
 //bools/properties
 //	setters
 	public void setBools(char property) { // sets underlying properties of a tile,
-		if (!isProperty(property)) { // represented by bools
+		if (!isProperty(property)) // represented by bools
 			throw new IllegalArgumentException("invalid property");
-		}
 		prop.setProperty(property);
 		if (getType() != 'T') { // text is always solid and move
 			solid = prop.isSolid();

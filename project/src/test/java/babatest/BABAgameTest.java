@@ -24,16 +24,14 @@ public class BABAgameTest {
 						   { ' ', ' ', ' ', ' ', ' ', 'f' }, 
 						   { 'f', 'i', 'v', 'r', 'i', 'p' }, 
 						   { 'w', 'i', 's', 'B', ' ', ' ' } };
-		for (int y = 0; y < 7; y++) { // sets the type of each tile according to board[][]
+		for (int y = 0; y < 7; y++) // sets the type of each tile according to board[][]
 			for (int x = 0; x < 6; x++) {
 				char chara = board[y][x];
-				if (Character.isLowerCase(chara)) { // text
+				if (Character.isLowerCase(chara)) // text
 					game.getTile(x, y).setType('T', chara);
-				} else if (Character.isUpperCase(chara)) {
+				else if (Character.isUpperCase(chara))
 					game.getTile(x, y).setType(chara); // type != text
-				} // tile defaults to ' ' (EMPTY) if chara != alpha
-			}
-		}
+			}   // tile defaults to ' ' (EMPTY) if chara != alpha
 	}
 
 	@Test

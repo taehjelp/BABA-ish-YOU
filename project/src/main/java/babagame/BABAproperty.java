@@ -6,11 +6,10 @@ public class BABAproperty {
 	private char property;
 
 	public void setProperty(char property) {
-		if (!"yvps".contains(String.valueOf(property))) { // yvps = YOU, WIN, PUSH, STOP
-			throw new IllegalArgumentException("invalid property");
-		} else {
+		if (!"yvps".contains(String.valueOf(property))) // yvps = YOU, WIN, PUSH, STOP
+			throw new IllegalArgumentException("invalid property, must be y/v/p/s");
+		else
 			this.property = property;
-		}
 	}
 
 //	The following bools represent the underlying properties of YOU, WIN, PUSH and STOP

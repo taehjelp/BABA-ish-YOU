@@ -65,21 +65,20 @@ public class BABAcontroller {
 						   { ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ' },
 						   { ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ' } };
 
-		for (int y = 0; y < height; y++) { // sets the type of each tile according to board[][]
+		for (int y = 0; y < height; y++) // sets the type of each tile according to board[][]
 			for (int x = 0; x < width; x++) {
 				char chara = board[y][x];
-				if (Character.isLowerCase(chara)) { // text
+				if (Character.isLowerCase(chara)) // text
 					game.getTile(x, y).setType('T', chara);
-				} else if (Character.isUpperCase(chara)) {
+				else if (Character.isUpperCase(chara)) {
 					game.getTile(x, y).setType(chara); // type != text
 				} // tile defaults to ' ' (EMPTY) if chara != alpha
 			}
-		}
 	}
 
 	private void createBoard() {
 		board.getChildren().clear();
-		for (int y = 0; y < game.getHeight(); y++) {
+		for (int y = 0; y < game.getHeight(); y++)
 			for (int x = 0; x < game.getWidth(); x++) {
 				Pane tile = new Pane();
 				tile.setTranslateX(x * 30);
@@ -88,16 +87,14 @@ public class BABAcontroller {
 				tile.setPrefHeight(30);
 				board.getChildren().add(tile);
 			}
-		}
 	}
 
 	private void drawBoard() {
-		for (int y = 0; y < game.getHeight(); y++) { // fills each tile with an image according to type
-			for (int x = 0; x < game.getWidth(); x++) {
+		for (int y = 0; y < game.getHeight(); y++) // fills each tile with an image according to type
+			for (int x = 0; x < game.getWidth(); x++)
 				board.getChildren().get(y * game.getWidth() + x).setStyle("-fx-background-image: url(" + "file:///"
 						+ rootPath + "/src/main/resources/images/" + getTileImage(game.getTile(x, y)) + ");");
-			}
-		} // displays win/lose-text if applicable and text is not already there
+		// displays win/lose-text if applicable and text is not already there
 		if (game.isWIN() && !board.getChildren().contains(winText)) {
 			winText.setText("YOU is WIN!");
 			winText.setFont(Font.font("Comic sans MS", 60));
@@ -152,17 +149,14 @@ public class BABAcontroller {
 	}
 
 	private void clearText() {
-		if (board.getChildren().contains(loseText)) {
+		if (board.getChildren().contains(loseText))
 			board.getChildren().remove(loseText);
-		} else if (board.getChildren().contains(winText)) {
+		else if (board.getChildren().contains(winText))
 			board.getChildren().remove(winText);
-		}
-		if (board.getChildren().contains(bonkText)) {
+		if (board.getChildren().contains(bonkText))
 			board.getChildren().remove(bonkText);
-		}
-		if (board.getChildren().contains(errorText)) {
+		if (board.getChildren().contains(errorText))
 			board.getChildren().remove(errorText);
-		}
 	}
 
 	private void errorText() { // adds temporary error-message if loading went wrong
@@ -179,36 +173,32 @@ public class BABAcontroller {
 //buttons
 	@FXML // player movement
 	public void handleUp() {
-		if (board.getChildren().contains(errorText)) {
+		if (board.getChildren().contains(errorText))
 			board.getChildren().remove(errorText);
-		}
 		game.moveUp();
 		drawBoard();
 	}
 
 	@FXML
 	public void handleDown() {
-		if (board.getChildren().contains(errorText)) {
+		if (board.getChildren().contains(errorText))
 			board.getChildren().remove(errorText);
-		}
 		game.moveDown();
 		drawBoard();
 	}
 
 	@FXML
 	public void handleLeft() {
-		if (board.getChildren().contains(errorText)) {
+		if (board.getChildren().contains(errorText))
 			board.getChildren().remove(errorText);
-		}
 		game.moveLeft();
 		drawBoard();
 	}
 
 	@FXML
 	public void handleRight() {
-		if (board.getChildren().contains(errorText)) {
+		if (board.getChildren().contains(errorText))
 			board.getChildren().remove(errorText);
-		}
 		game.moveRight();
 		drawBoard();
 	}
@@ -230,20 +220,19 @@ public class BABAcontroller {
 	public void handleLoad() { 
 		clearText();
 		char[][] board = babaFile.load(saveFile, height, width);
-		if (board == null) { // TODO 3 feilhandtering: load returns null if saveFile is empty, displays errorText
+		if (board == null) // TODO 3 feilhandtering: load returns null if saveFile is empty, displays errorText
 			errorText();
-		} else {
+		else {
 			game = new BABAgame(height, width);
 			for (int y = 0; y < height; y++) {
 				for (int x = 0; x < width; x++) {
 					char chara = board[y][x];
-					if (Character.isLowerCase(chara)) { // type = text
+					if (Character.isLowerCase(chara)) // type = text
 						game.getTile(x, y).setType('T', chara);
-					} else if (Character.isUpperCase(chara)) {
+					else if (Character.isUpperCase(chara))
 						game.getTile(x, y).setType(chara); // type != text
-					} else {
+					else
 						game.getTile(x, y).setType(' ');
-					}
 				}
 			}
 		}
@@ -260,9 +249,7 @@ public class BABAcontroller {
 			bonkText.setTranslateX(0.0);
 			bonkText.setTranslateY(250.0);
 			board.getChildren().add(bonkText);
-		} else {
+		} else
 			board.getChildren().remove(bonkText); // removes bonkText if it's already there
-		}
-
 	}
 }

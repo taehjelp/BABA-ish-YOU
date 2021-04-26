@@ -35,16 +35,14 @@ public class BABAfileTest {
 
 	@BeforeAll
 	public void setUp() {
-		for (int y = 0; y < 3; y++) { // sets the type of each tile according to board[][]
+		for (int y = 0; y < 3; y++) // sets the type of each tile according to board[][]
 			for (int x = 0; x < 3; x++) {
 				char chara = board[y][x];
-				if (Character.isLowerCase(chara)) { // text
+				if (Character.isLowerCase(chara)) // text
 					game.getTile(x, y).setType('T', chara);
-				} else if (Character.isUpperCase(chara)) {
+				else if (Character.isUpperCase(chara))
 					game.getTile(x, y).setType(chara); // type != text
-				} // tile defaults to ' ' (EMPTY) if chara != alpha
-			}
-		}
+			}   // tile defaults to ' ' (EMPTY) if chara != alpha
 	}
 
 	@Test
@@ -53,9 +51,8 @@ public class BABAfileTest {
 		babaFile.save(game.toString(), testSaveFile);
 		String saved = "";
 		try (BufferedReader reader = new BufferedReader(new FileReader(testSaveFile))) {
-			for (int i = 0; i < 3; i++) {
+			for (int i = 0; i < 3; i++)
 				saved += reader.readLine() + "\n";
-			}
 		} catch (IOException e) {
 			System.out.println("IO EXCEPTION");
 		} catch (Exception e) {
