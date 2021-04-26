@@ -6,8 +6,8 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
+//TODO 1 Appklasse
 public class BABAapp extends Application {
-
 	@Override
 	public void start(Stage stage) throws Exception {
 		Parent parent = FXMLLoader.load(getClass().getResource("BABAishYOU.fxml"));
@@ -21,5 +21,3 @@ public class BABAapp extends Application {
 	}
 
 }
-
-// TODO noter meg kor i koden dei ulike krava n shit dukke opp

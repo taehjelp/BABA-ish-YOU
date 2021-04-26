@@ -7,13 +7,14 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 
+//TODO 1 Controller-klasse
 public class BABAcontroller {
 	private BABAgame game;
 	private int height;
 	private int width;
 	private BABAfile babaFile = new BABAfile();
-	String rootPath = new File("").getAbsolutePath().replace("\\", "/");
-	String filePath = rootPath + "/src/main/java/babagame/saveFile.txt";
+	private String rootPath = new File("").getAbsolutePath().replace("\\", "/");
+	private String filePath = rootPath + "/src/main/java/babagame/saveFile.txt";
 	private File saveFile = new File(filePath);
 
 	@FXML
@@ -50,19 +51,19 @@ public class BABAcontroller {
 		game = new BABAgame(height, width);
 
 		char[][] board = { { ' ', ' ', ' ', ' ', 'R', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ' },
-				{ 'R', 't', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'w', 'i', 's', ' ', ' ' },
-				{ ' ', 'i', ' ', ' ', ' ', ' ', 'W', 'W', 'W', 'W', 'W', 'W', 'W', ' ' },
-				{ ' ', ' ', ' ', ' ', ' ', ' ', 'R', ' ', ' ', 'F', ' ', ' ', 'W', ' ' },
-				{ ' ', ' ', 'R', ' ', ' ', ' ', 'W', ' ', ' ', ' ', 'R', ' ', 'W', ' ' },
-				{ ' ', ' ', ' ', ' ', ' ', ' ', 'W', ' ', 'f', 'i', ' ', ' ', 'W', ' ' },
-				{ ' ', ' ', ' ', ' ', ' ', ' ', 'W', 'W', 'W', 'W', 'v', ' ', 'W', ' ' },
-				{ ' ', 'F', ' ', 'R', ' ', ' ', ' ', ' ', ' ', 'W', ' ', ' ', 'W', ' ' },
-				{ 'R', 'R', 'R', 'R', 'R', 'R', 'R', 'R', 'R', 'W', 'W', 'W', 'W', ' ' },
-				{ ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ' },
-				{ ' ', ' ', ' ', ' ', ' ', ' ', 'p', ' ', ' ', 'B', ' ', ' ', ' ', ' ' },
-				{ ' ', ' ', ' ', 'r', 'i', 's', ' ', ' ', ' ', 'b', 'i', 'y', ' ', ' ' },
-				{ ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ' },
-				{ ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ' } };
+						   { 'R', 't', ' ', ' ', ' ', ' ', ' ', ' ', ' ', 'w', 'i', 's', ' ', ' ' },
+						   { ' ', 'i', ' ', ' ', ' ', ' ', 'W', 'W', 'W', 'W', 'W', 'W', 'W', ' ' },
+						   { ' ', ' ', ' ', ' ', ' ', ' ', 'R', ' ', ' ', 'F', ' ', ' ', 'W', ' ' },
+						   { ' ', ' ', 'R', ' ', ' ', ' ', 'W', ' ', ' ', ' ', 'R', ' ', 'W', ' ' },
+						   { ' ', ' ', ' ', ' ', ' ', ' ', 'W', ' ', 'f', 'i', ' ', ' ', 'W', ' ' },
+						   { ' ', ' ', ' ', ' ', ' ', ' ', 'W', 'W', 'W', 'W', 'v', ' ', 'W', ' ' },
+						   { ' ', 'F', ' ', 'R', ' ', ' ', ' ', ' ', ' ', 'W', ' ', ' ', 'W', ' ' },
+						   { 'R', 'R', 'R', 'R', 'R', 'R', 'R', 'R', 'R', 'W', 'W', 'W', 'W', ' ' },
+						   { ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ' },
+						   { ' ', ' ', ' ', ' ', ' ', ' ', 'p', ' ', ' ', 'B', ' ', ' ', ' ', ' ' },
+						   { ' ', ' ', ' ', 'r', 'i', 's', ' ', ' ', ' ', 'b', 'i', 'y', ' ', ' ' },
+						   { ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ' },
+						   { ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ', ' ' } };
 
 		for (int y = 0; y < height; y++) { // sets the type of each tile according to board[][]
 			for (int x = 0; x < width; x++) {
@@ -85,7 +86,6 @@ public class BABAcontroller {
 				tile.setTranslateY(y * 30);
 				tile.setPrefWidth(30);
 				tile.setPrefHeight(30);
-				tile.setStyle("-fx-border-color: black; -fx-border-width: 1px;");
 				board.getChildren().add(tile);
 			}
 		}
@@ -151,7 +151,7 @@ public class BABAcontroller {
 			return "EMPTY.png"; // empty, green
 	}
 
-	public void clearText() {
+	private void clearText() {
 		if (board.getChildren().contains(loseText)) {
 			board.getChildren().remove(loseText);
 		} else if (board.getChildren().contains(winText)) {
@@ -165,7 +165,7 @@ public class BABAcontroller {
 		}
 	}
 
-	public void errorText() { // adds temporary error-message if loading went wrong
+	private void errorText() { // adds temporary error-message if loading went wrong
 		if (!board.getChildren().contains(errorText)) {
 			errorText.setText("LOAD is ERROR");
 			errorText.setFont(Font.font("Comic sans MS", 45));
@@ -220,16 +220,17 @@ public class BABAcontroller {
 		drawBoard();
 	}
 
+//TODO 2 filbehandling i controller
 	@FXML // saves board to file
 	public void handleSave() {
 		babaFile.save(game.toString(), saveFile); // board is saved to file
 	}
 
-	@FXML // loads board from file
-	public void handleLoad() {
+	@FXML // sets board according to the contents of saveFile
+	public void handleLoad() { 
 		clearText();
 		char[][] board = babaFile.load(saveFile, height, width);
-		if (board == null) {
+		if (board == null) { // TODO 3 feilhandtering: load returns null if saveFile is empty, displays errorText
 			errorText();
 		} else {
 			game = new BABAgame(height, width);

@@ -3,8 +3,9 @@ package babagame;
 import java.util.ArrayList;
 import java.util.List;
 
+//TODO 1 grunnklasse, her bur Kalkulasjonar:) som i Funksjonaliteten I Spelet:) alt som kan vere private e private:)
+//TODO 3 feilhandtering: ugyldig input, i dei fleste metodar vert x,y sjekka av getTile
 public class BABAgame {
-
 	private int height;
 	private int width;
 	private BABAtile[][] board;
@@ -38,7 +39,8 @@ public class BABAgame {
 	}
 
 //tiles
-	public BABAtile getTile(int x, int y) {
+	//TODO 3 feilhandtering: getTile brukast for validering i mesteparten av metodane som behandlar tiles i klassen:)
+	public BABAtile getTile(int x, int y) { 
 		if (!isTile(x, y)) {
 			throw new IllegalArgumentException("Coordinates out of bounds");
 		}
@@ -126,7 +128,6 @@ public class BABAgame {
 		}
 	}
 
-//	 dei 3 neste: teste dei indirekte gjennom updateRules-test??
 //	property/noun setters
 	private void resetAllProps() { // resets property-bools of all tiles (except Text)
 		for (int y = 0; y < height; y++) {
@@ -137,7 +138,7 @@ public class BABAgame {
 	}
 
 	private void setAllProps(char noun, char property) { // all tiles matching noun's Type are given the
-		for (int y = 0; y < height; y++) { // input property
+		for (int y = 0; y < height; y++) {               // input property
 			for (int x = 0; x < width; x++) {
 				if (noun == board[y][x].typeToNoun()) {
 					board[y][x].setBools(property);
@@ -147,12 +148,12 @@ public class BABAgame {
 	}
 
 	private void setAllNouns(char startNoun, char endNoun) { // all tiles matching startNoun's type are
-		for (int y = 0; y < height; y++) { // set to endNoun's type
+		for (int y = 0; y < height; y++) {                   // set to endNoun's type
 			for (int x = 0; x < width; x++) {
 				if (startNoun == board[y][x].typeToNoun()) {
 					if (endNoun == 't') { // text is a special case
 						board[y][x].setType(nounToType(endNoun), startNoun); // i.e: ROCK is TEXT turns all
-					} else { // rocks into text saying "rock"
+					} else {                                                 // rocks into text saying "rock"
 						board[y][x].setType(nounToType(endNoun));
 					}
 				}

@@ -8,6 +8,7 @@ import org.junit.jupiter.api.Test;
 
 import babagame.BABAproperty;
 
+//TODO 4 testing, kun 1 metode å teste i BABAproperty:)
 public class BABApropertyTest {
 	private BABAproperty prop;
 

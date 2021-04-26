@@ -10,6 +10,7 @@ import org.junit.jupiter.api.TestInstance;
 
 import babagame.BABAtile;
 
+//TODO 4 testing, alle metodar som ikkje er enkle gettarar/settarar testast:)
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class BABAtileTest {
 	private BABAtile tile;
@@ -30,7 +31,7 @@ public class BABAtileTest {
 
 	@Test
 	@DisplayName("Testing setType()")
-	void testSetType() {
+	void testSetType() {		
 		// 1 arg
 		assertThrows(IllegalArgumentException.class, () -> {
 			tile.setType('T');

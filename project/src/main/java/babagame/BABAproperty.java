@@ -1,7 +1,8 @@
 package babagame;
 
+//TODO 1 grunnklasse
+//TODO 3 feilhandtering: ugyldig input
 public class BABAproperty {
-
 	private char property;
 
 	public void setProperty(char property) {

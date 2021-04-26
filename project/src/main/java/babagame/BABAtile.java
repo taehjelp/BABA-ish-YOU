@@ -1,8 +1,10 @@
 package babagame;
 
+//TODO 1 grunnklasse
+//TODO 3 feilhandtering: ugyldig input
 public class BABAtile {
 	private char type = ' '; // current type of the tile
-	private char underType = ' '; // memory:) stores current type if a move-obj moves on top of it
+	private char underType = ' '; // memory:) stores type if a move-obj moves on top of it
 	private char text;
 	private int x;
 	private int y;
@@ -16,7 +18,7 @@ public class BABAtile {
 	private String operators = "i"; // i = is
 	private String properties = "yvps"; // yvps = YOU, WIN, PUSH, STOP
 
-	BABAproperty prop = new BABAproperty();
+	private BABAproperty prop = new BABAproperty();
 
 //const
 	public BABAtile(int x, int y) {
@@ -93,7 +95,10 @@ public class BABAtile {
 //undertype 
 //	setter
 	public void setUnderType(char type) { // stores non-solid type if a move-obj moves on top of it
-		underType = type; // + some other stuff:)
+		if (!types.contains(String.valueOf(type))) {                        // + some other stuff:)
+			throw new IllegalArgumentException("invalid type");
+		}
+		underType = type; 
 	}
 
 //	getter
