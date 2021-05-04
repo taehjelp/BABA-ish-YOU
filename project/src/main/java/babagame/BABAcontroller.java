@@ -7,7 +7,6 @@ import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 
-//TODO 1 Controller-klasse
 public class BABAcontroller {
 	private BABAgame game;
 	private int height;
@@ -210,7 +209,6 @@ public class BABAcontroller {
 		drawBoard();
 	}
 
-//TODO 2 filbehandling i controller
 	@FXML // saves board to file
 	public void handleSave() {
 		babaFile.save(game.toString(), saveFile); // board is saved to file
@@ -220,7 +218,7 @@ public class BABAcontroller {
 	public void handleLoad() { 
 		clearText();
 		char[][] board = babaFile.load(saveFile, height, width);
-		if (board == null) // TODO 3 feilhandtering: load returns null if saveFile is empty, displays errorText
+		if (board == null)
 			errorText();
 		else {
 			game = new BABAgame(height, width);

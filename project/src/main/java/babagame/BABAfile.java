@@ -7,8 +7,6 @@ import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 
-//TODO 2 filbehandling
-//TODO 3 feilhandtering: try/catch, unntak v ugyldig input i load
 public class BABAfile implements BABAfileInterface {
 
 	public void save(String game, File file) { // saves current board as the BABAgame toString
@@ -32,9 +30,9 @@ public class BABAfile implements BABAfileInterface {
 				for (int x = 0; x < width; x++)
 					array[y][x] = line.charAt(x);
 			}
-		} catch (IOException e) { //TODO 3 feilhandtering: einaste feil det er sannsynleg at brukaren møter på:
-			System.out.println("LOAD is IO EXCEPTION");  //saveFile er tom:) return null får kontrollaren til 
-			return null;                                 //å vise brukaren ei fin feilmelding:)
+		} catch (IOException e) { 
+			System.out.println("LOAD is IO EXCEPTION");  //saveFile is empty:) return null makes the controller 
+			return null;                                 //display an error message:)
 		} catch (Exception e) {
 			System.out.println("LOAD is EXCEPTION");
 			return null;

@@ -9,7 +9,6 @@ import org.junit.jupiter.api.Test;
 
 import babagame.BABAgame;
 
-//TODO 4 testing, public metodar testa, private metodar testa gjennom moveUp/Down/Left/Right
 public class BABAgameTest {
 	private BABAgame game;
 

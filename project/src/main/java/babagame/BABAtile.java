@@ -1,7 +1,5 @@
 package babagame;
 
-//TODO 1 grunnklasse
-//TODO 3 feilhandtering: ugyldig input
 public class BABAtile {
 	private char type = ' '; // current type of the tile
 	private char underType = ' '; // memory:) stores type if a move-obj moves on top of it

@@ -3,8 +3,6 @@ package babagame;
 import java.util.ArrayList;
 import java.util.List;
 
-//TODO 1 grunnklasse, her bur Kalkulasjonar:) som i Funksjonaliteten I Spelet:) alt som kan vere private e private:)
-//TODO 3 feilhandtering: ugyldig input, i dei fleste metodar vert x,y sjekka av getTile
 public class BABAgame {
 	private int height;
 	private int width;
@@ -36,7 +34,6 @@ public class BABAgame {
 	}
 
 //tiles
-	//TODO 3 feilhandtering: getTile brukast for validering i mesteparten av metodane som behandlar tiles i klassen:)
 	public BABAtile getTile(int x, int y) { 
 		if (!isTile(x, y))
 			throw new IllegalArgumentException("coordinates out of bounds");

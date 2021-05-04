@@ -21,7 +21,6 @@ import org.junit.jupiter.api.TestInstance;
 import babagame.BABAfile;
 import babagame.BABAgame;
 
-//TODO 4 testing, testar alle 2 (to) metodar:)
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 public class BABAfileTest {
 	private BABAgame game = new BABAgame(3, 3);
