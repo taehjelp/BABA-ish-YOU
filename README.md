@@ -1,8 +1,6 @@
 # BABA-ish-YOU
 a bad BABA is YOU clone&lt;3 my beloved&lt;3
 
-![bilde](https://github.com/taehjelp/BABA-ish-YOU/assets/70016791/6a0f498c-117d-43d8-ada4-64bbd5ec81f3) ![bilde](https://github.com/taehjelp/BABA-ish-YOU/assets/70016791/5d39fabb-e130-454e-ba77-1eb716b4316d) 
-
 my first attempt at making an app (and first project in general), as I'm sure you can tell from a variety of questionable decisions! 
 maybe I'll add a proper readme at some point, for now this is more of a note to self on how to actually get this badboy to run, if you're lucky
 
@@ -15,5 +13,6 @@ if you get complaints about finding images, ensure that the file path doesn't ha
 if you get complaints starting with "Exception in Application start method
 java.lang.reflect.InvocationTargetException", try adding and removing a character anywhere in BABAapp.java, run again. might just be a "vscode hates java" issue! no I'm not going to download intellij, I don't plan on doing more java work anytime soon :3
 
+![bilde](https://github.com/taehjelp/BABA-ish-YOU/assets/70016791/5d39fabb-e130-454e-ba77-1eb716b4316d)
 
 
