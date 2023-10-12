@@ -1,9 +1,8 @@
-open module todolist {
+module babagame {
 	requires javafx.base;
 	requires javafx.controls;
 	requires javafx.fxml;
 	requires javafx.graphics;
-	requires java.base;
-	requires java.desktop;
+	
+	opens babagame to javafx.graphics, javafx.fxml;
 }
-

@@ -21,7 +21,9 @@
   		<version>5.7.0</version>
   	</dependency>
   </dependencies>
-  
+  <properties>
+	<exec.mainClass>babagame.BABAapp</exec.mainClass>
+  </properties>
   <build>
   	<plugins>
   		<plugin>
@@ -29,9 +31,6 @@
   			<version>3.8.0</version>
   			<configuration>
   				<release>15</release>
-  				<compilerArgs>
-  					--enable-preview
-  				</compilerArgs>
   			</configuration>
   		</plugin>
   		<plugin>

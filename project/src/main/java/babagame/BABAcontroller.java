@@ -92,7 +92,7 @@ public class BABAcontroller {
 		for (int y = 0; y < game.getHeight(); y++) // fills each tile with an image according to type
 			for (int x = 0; x < game.getWidth(); x++)
 				board.getChildren().get(y * game.getWidth() + x).setStyle("-fx-background-image: url(" + "file:///"
-						+ rootPath + "/src/main/resources/images/" + getTileImage(game.getTile(x, y)) + ");");
+						+ rootPath + "/project/src/main/resources/images/" + getTileImage(game.getTile(x, y)) + ");");
 		// displays win/lose-text if applicable and text is not already there
 		if (game.isWIN() && !board.getChildren().contains(winText)) {
 			winText.setText("YOU is WIN!");

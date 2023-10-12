@@ -9,7 +9,7 @@ import javafx.stage.Stage;
 public class BABAapp extends Application {
 	@Override
 	public void start(Stage stage) throws Exception {
-		Parent parent = FXMLLoader.load(getClass().getResource("BABAishYOU.fxml"));
+		Parent parent = FXMLLoader.load(getClass().getResource("/BABAishYOU.fxml"));
 		stage.setTitle("BABA ish YOU");
 		stage.setScene(new Scene(parent));
 		stage.show();
