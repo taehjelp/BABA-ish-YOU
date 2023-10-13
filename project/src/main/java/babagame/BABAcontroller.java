@@ -6,6 +6,8 @@ import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
+import javafx.scene.input.KeyEvent;
+import javafx.scene.input.KeyCode;
 
 public class BABAcontroller {
 	private BABAgame game;
@@ -13,7 +15,7 @@ public class BABAcontroller {
 	private int width;
 	private BABAfile babaFile = new BABAfile();
 	private String rootPath = new File("").getAbsolutePath().replace("\\", "/");
-	private String filePath = rootPath + "/src/main/java/babagame/saveFile.txt";
+	private String filePath = rootPath + "/project/src/main/java/babagame/saveFile.txt";
 	private File saveFile = new File(filePath);
 
 	@FXML
@@ -167,6 +169,28 @@ public class BABAcontroller {
 			errorText.setTranslateY(200.0);
 			board.getChildren().add(errorText);
 		}
+	}
+
+//key inputs
+	@FXML
+	public void handleOnKeyPressed(KeyEvent event) {
+		KeyCode key = event.getCode();
+		if (key == KeyCode.W)
+			handleUp();
+		else if (key == KeyCode.S)
+			handleDown();
+		else if (key == KeyCode.A)
+			handleLeft();
+		else if (key == KeyCode.D)
+			handleRight();
+		else if (key == KeyCode.R)
+			handleReset();
+		else if (key == KeyCode.C)
+			handleSave();
+		else if (key == KeyCode.V)
+			handleLoad();
+		else if (key == KeyCode.B)
+			handleBonk();
 	}
 
 //buttons
